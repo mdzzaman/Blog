@@ -5,18 +5,18 @@ SOLID is the popular sets of design principles in object-oriented software devel
 <br>
 
 ### SOLID stands for
-- S - [Single-responsibility Principle](#-Single-responsibility-Principle)
-- O - [Open-closed Principle](#-Open-closed-Principle)
-- L - [Liskov Substitution Principle](#-Liskov-Substitution-Principle)
-- I - [Interface Segregation Principle](#-Interface-Segregation-Principle)
-- D - [Dependency Inversion Principle](#-dependency-inversion-principle)
+- S - [Single-responsibility Principle](#single-responsibility-principle)
+- O - [Open-closed Principle](#open-closed-principle)
+- L - [Liskov Substitution Principle](#liskov-substitution-principle)
+- I - [Interface Segregation Principle](#interface-segregation-principle)
+- D - [Dependency Inversion Principle](#dependency-inversion-principle)
 <br>
 
 We do not always write OO(object-oriented) code using OO language. Because sometime we write procedural code using OO language. That means OO language does not guarantee OO code. We can make our code OO by applying **SOLID** principles.
 <br>
 
 ## What it is?
-1. Reaction (Solution) of [**Design smell**](#-design-smell)
+1. Reaction (Solution) of [**Design smell**](#design-smell)
 
 ### Design smell
 1. Rigidity
