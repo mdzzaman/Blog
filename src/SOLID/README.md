@@ -302,6 +302,27 @@ Subtypes must be substitutable for their base types [Robert C. "Uncle Bob" Marti
 - Subtype can not violate base type.
 
 ### Example
+Code
+```c#
+public class BaseType 
+{
+    public double Height { get; set; }
+    public double Width { get; set; }
+}
+
+public class SubType : BaseType
+{
+    public double Depth { get; set; }
+}
+
+
+BaseType substitute = new SubType{ Height = 11, Width = 13, Depth = 15};
+SubType backToSubType = (SubType)substitute;
+// backToSubType.Depth ->  15
+
+```
+
+
 Code :heavy_check_mark:
 ```C#
 public class Bird {
