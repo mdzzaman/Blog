@@ -76,7 +76,7 @@ We do not always write OO(object-oriented) code using OO language. Because somet
 
 ## Example [[r1](https://exceptionnotfound.net/simply-solid-the-single-responsibility-principle/)]
 
-:x:
+Code :x:
 ```c#
 public class InvitationService
 {
@@ -97,7 +97,7 @@ public class InvitationService
 }
 ```
 
-:heavy_check_mark:
+Code :heavy_check_mark:
 ```c#
 public class InvitationService
 {
@@ -111,7 +111,8 @@ public class InvitationService
     }
     public void SendInvite(string email, string firstName, string lastName)
     {
-        _userNameService.Validate(firstName, lastName); // Do you think same think is doing hare? No it's only call other who has responsibility to validate.
+        _userNameService.Validate(firstName, lastName); // Do you think same think is doing hare? 
+                                                        //No it's only call other who has responsibility to validate.
         _emailService.Validate(email);
         SmtpClient client = new SmtpClient();
         client.Send(new MailMessage("sitename@invites2you.com", email) { Subject = "Please join me at my party!" });
@@ -179,7 +180,7 @@ Software entities (classes, modules, functions, etc...) should be open for exten
     - Implementations utilize Inheritance, Client utilizes Composition
 
 ## Example
-:x:
+Code :x:
 ```c#
 public class CombinedAreaCalculator
 {
@@ -235,7 +236,7 @@ public class Circle
 ```
 Violate rule **CombinedAreaCalculator** modify. How we can solve it?. We can solve it by refactor this code so that it flow the principle.
 
-:heavy_check_mark:
+Code :heavy_check_mark:
 ```c#
 public class CombinedAreaCalculator
 {
@@ -301,7 +302,7 @@ Subtypes must be substitutable for their base types [Robert C. "Uncle Bob" Marti
 - Subtype can not violate base type.
 
 ### Example
-:heavy_check_mark:
+Code :heavy_check_mark:
 ```C#
 public class Bird {
     public void fly(){}
@@ -311,7 +312,7 @@ public class Duck extends Bird {
 }
 ```
 
-:x:
+Code :x:
 ```C#
 public class Bird {
     public void fly(){}
@@ -348,7 +349,7 @@ The Interface Segregation Principle states that Clients should **not** be forced
 - If you find **fat** interfaces are problematic
 
 ### Example
-:x:
+Code :x:
 ```c#
 public interface IVehicle
 {
@@ -410,13 +411,14 @@ public class DriveCar
 
     public void Drive()
     {
-        _car.Drive(); // Problem is there is two option to call 1. Drive(), 2.Fly() but user have to know Fly() is not implemented for Car this is problem.
+        _car.Drive();   // Problem is there is two option to call 1. Drive(), 2.Fly() 
+                        // but user have to know Fly() is not implemented for Car this is problem.
     }
 }
 
 ```
 
-:heavy_check_mark:
+Code :heavy_check_mark:
 ```c#
 public interface ICar
 {
@@ -519,7 +521,7 @@ In the above image `Lamp is a High-level module and electrical wire is low-level
 - ...
 
 ### Example
-:x:
+Code :x:
 ```c#
 public class Notification
 {
@@ -560,7 +562,7 @@ public class SMS
 }
 ```
 
-:heavy_check_mark:
+Code :heavy_check_mark:
 ```c#
 public class Notification
 {
