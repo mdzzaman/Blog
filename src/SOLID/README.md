@@ -74,6 +74,73 @@ We do not always write OO(object-oriented) code using OO language. Because somet
     - Having multiple responsibilities with a class, couples together these responsibilities
     - **The more classes a change affects, the more likely the change will introduce error**.
 
+## Example [[r1](https://exceptionnotfound.net/simply-solid-the-single-responsibility-principle/)]
+
+:x:
+```c#
+public class InvitationService
+{
+	public void SendInvite(string email, string firstName, string lastName)
+    {
+    	if(String.IsNullOrWhiteSpace(firstName) || String.IsNullOrWhiteSpace(lastName))
+        {
+         	throw new Exception("Name is not valid!");
+        }
+    	
+    	if(!email.Contains("@") || !email.Contains("."))
+        {
+        	throw new Exception("Email is not valid!!");
+        }
+        SmtpClient client = new SmtpClient();
+        client.Send(new MailMessage("mysite@nowhere.com", email) { Subject = "Please join me at my party!" });
+    }
+}
+```
+
+:heavy_check_mark:
+```c#
+public class InvitationService
+{
+    UserNameService _userNameService;
+    EmailService _emailService;
+
+    public InvitationService(UserNameService userNameService, EmailService emailService)
+    {
+        _userNameService = userNameService;
+        _emailService = emailService;
+    }
+    public void SendInvite(string email, string firstName, string lastName)
+    {
+        _userNameService.Validate(firstName, lastName); // Do you think same think is doing hare? No it's only call other who has responsibility to validate.
+        _emailService.Validate(email);
+        SmtpClient client = new SmtpClient();
+        client.Send(new MailMessage("sitename@invites2you.com", email) { Subject = "Please join me at my party!" });
+    }
+}
+
+public class UserNameService
+{
+    public void Validate(string firstName, string lastName)
+    {
+        if(String.IsNullOrWhiteSpace(firstName) || String.IsNullOrWhiteSpace(lastName))
+        {
+            throw new Exception("The name is invalid!");
+        }
+    }
+}
+
+public class EmailService
+{
+    public void Validate(string email)
+    {
+        if (!email.Contains("@") || !email.Contains("."))
+        {
+            throw new Exception("Email is not valid!!");
+        }
+    }
+}
+```
+
 ---    
 ## Open-closed Principle
 Software entities (classes, modules, functions, etc...) should be open for extension, but closed for modification [Wiki]. When other client rely on your class then you are no longer allow to change this class.
@@ -111,6 +178,113 @@ Software entities (classes, modules, functions, etc...) should be open for exten
     - Provides a "plug in" model
     - Implementations utilize Inheritance, Client utilizes Composition
 
+## Example
+:x:
+```c#
+public class CombinedAreaCalculator
+{
+    public double Area(object[] shapes)
+    {
+        double area = 0;
+        foreach (var shape in shapes)
+        {
+            if (shape is Rectangle)
+            {
+                Rectangle rectangle = (Rectangle)shape;
+                area += rectangle.Width * rectangle.Height;
+            }
+        }
+        return area;
+    }
+}
+
+public class Rectangle
+{
+    public double Width { get; set; }
+    public double Height { get; set; }
+}
+```
+What happen for Circle
+```c#
+public class CombinedAreaCalculator
+{
+    public double Area(object[] shapes)
+    {
+        double area = 0;
+        foreach (var shape in shapes)
+        {
+            if (shape is Rectangle) // Violate principle, modify code. condition add
+            {
+                Rectangle rectangle = (Rectangle)shape;
+                area += rectangle.Width * rectangle.Height;
+            }
+            if (shape is Circle)
+            {
+                Circle circle = (Circle)shape;
+                area += (circle.Radius * circle.Radius) * Math.PI;
+            }
+        }
+
+        return area;
+    }
+}
+public class Circle
+{
+    public double Radius { get; set; }
+}
+```
+Violate rule **CombinedAreaCalculator** modify. How we can solve it?. We can solve it by refactor this code so that it flow the principle.
+
+:heavy_check_mark:
+```c#
+public class CombinedAreaCalculator
+{
+    public double Area(Shape[] shapes)
+    {
+        double area = 0;
+        foreach (var shape in shapes)
+        {
+            area += shape.Area(); // Now it's work
+        }
+        return area;
+    }
+}
+
+public abstract class Shape
+{
+    public abstract double Area();
+}
+
+public class Rectangle : Shape
+{
+    public double Width { get; set; }
+    public double Height { get; set; }
+    public override double Area()
+    {
+        return Width * Height;
+    }
+}
+
+public class Circle : Shape
+{
+    public double Radius { get; set; }
+    public override double Area()
+    {
+        return Radius * Radius * Math.PI;
+    }
+}
+
+public class Triangle : Shape
+{
+    public double Height { get; set; }
+    public double Width { get; set; }
+    public override double Area()
+    {
+        return Height * Width * 0.5;
+    }
+}
+```
+
 ---
 ## Liskov Substitution Principle
 Subtypes must be substitutable for their base types [Robert C. "Uncle Bob" Martin - wiki](https://en.wikipedia.org/wiki/SOLID).
@@ -126,7 +300,8 @@ Subtypes must be substitutable for their base types [Robert C. "Uncle Bob" Marti
 - Subtype must have all property of Base type.
 - Subtype can not violate base type.
 
-Valid Code
+### Example
+:heavy_check_mark:
 ```C#
 public class Bird {
     public void fly(){}
@@ -136,7 +311,7 @@ public class Duck extends Bird {
 }
 ```
 
-Invalid Code
+:x:
 ```C#
 public class Bird {
     public void fly(){}
@@ -172,6 +347,137 @@ The Interface Segregation Principle states that Clients should **not** be forced
     - If there is no pain, there’s no problem to address.
 - If you find **fat** interfaces are problematic
 
+### Example
+:x:
+```c#
+public interface IVehicle
+{
+    void Drive();
+    void Fly();
+}
+
+public class MultiFunctionalCar : IVehicle
+{
+    public void Drive()
+    {
+        //actions to start driving car
+        Console.WriteLine("Drive a multifunctional car");
+    }
+
+    public void Fly()
+    {
+        //actions to start flying
+        Console.WriteLine("Fly a multifunctional car");
+    }
+}
+
+public class Car : IVehicle
+{
+    public void Drive()
+    {
+        //actions to drive a car
+        Console.WriteLine("Driving a car");
+    }
+
+    public void Fly()
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class Airplane : IVehicle
+{
+    public void Drive()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Fly()
+    {
+        //actions to fly a plane
+        Console.WriteLine("Flying a plane");
+    }
+}
+
+// Client
+public class DriveCar
+{
+    private readonly ICar _car;
+    public DriveCar(ICar car)
+    {
+        _car = car;
+    }
+
+    public void Drive()
+    {
+        _car.Drive(); // Problem is there is two option to call 1. Drive(), 2.Fly() but user have to know Fly() is not implemented for Car this is problem.
+    }
+}
+
+```
+
+:heavy_check_mark:
+```c#
+public interface ICar
+{
+    void Drive();
+}
+public interface IAirplane
+{
+    void Fly();
+}
+
+public interface IMultiFunctionalVehicle : ICar, IAirplane
+{
+}
+
+public class Car : ICar
+{
+    public void Drive()
+    {
+        //actions to drive a car
+        Console.WriteLine("Driving a car");
+    }
+}
+public class Airplane : IAirplane
+{
+    public void Fly()
+    {
+        //actions to fly a plane
+        Console.WriteLine("Flying a plane");
+    }
+}
+
+public class MultiFunctionalCar : IMultiFunctionalVehicle
+{
+    public void Drive()
+    {
+        //actions to start driving car
+        Console.WriteLine("Drive a multifunctional car");
+    }
+
+    public void Fly()
+    {
+        //actions to start flying
+        Console.WriteLine("Fly a multifunctional car");
+    }
+}
+
+// Client
+public class DriveCar
+{
+    private readonly ICar _car;
+    public DriveCar(ICar car)
+    {
+        _car = car;
+    }
+
+    public void Drive()
+    {
+        _car.Drive(); // Now there is one option in interface
+    }
+}
+```
 ---
 ## Dependency Inversion Principle
 High-level modules should not depend on low-level modules. Both should **depend on abstractions**.
@@ -211,3 +517,92 @@ In the above image `Lamp is a High-level module and electrical wire is low-level
             - Can result in many parameters (design smell)
         - Consider if only one method has the dependency, otherwise prefer constructor injection
 - ...
+
+### Example
+:x:
+```c#
+public class Notification
+{
+    private Email _email;
+    private SMS _sms;
+    public Notification()
+    {
+        _email = new Email();
+        _sms = new SMS();
+    }
+
+    public void Send()
+    {
+        _email.SendEmail();
+        _sms.SendSMS();
+    }
+}
+
+public class Email
+{
+    public string ToAddress { get; set; }
+    public string Subject { get; set; }
+    public string Content { get; set; }
+    public void SendEmail()
+    {
+        //Send email
+    }
+}
+
+public class SMS
+{
+    public string PhoneNumber { get; set; }
+    public string Message { get; set; }
+    public void SendSMS()
+    {
+        //Send sms
+    }
+}
+```
+
+:heavy_check_mark:
+```c#
+public class Notification
+{
+    private ICollection<IMessage> _messages;
+
+    public Notification(ICollection<IMessage> messages)
+    {
+        this._messages = messages;
+    }
+    public void Send()
+    {
+        foreach(var message in _messages)
+        {
+            message.SendMessage();
+        }
+    }
+}
+
+public interface IMessage
+{
+    void SendMessage();
+}
+
+public class Email : IMessage
+{
+    public string ToAddress { get; set; }
+    public string Subject { get; set; }
+    public string Content { get; set; }
+    public void SendMessage()
+    {
+        //Send email
+    }
+}
+
+public class SMS : IMessage
+{
+    public string PhoneNumber { get; set; }
+    public string Message { get; set; }
+    public void SendMessage()
+    {
+        //Send sms
+    }
+}
+```
+---
