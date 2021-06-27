@@ -328,7 +328,7 @@ Code :heavy_check_mark:
 public class Bird {
     public void fly(){}
 }
-public class Duck extends Bird {
+public class Duck : Bird {
     // Duck can fly that means Duck has all property that are exist for a bird, So it is valid
 }
 ```
@@ -338,7 +338,7 @@ Code :x:
 public class Bird {
     public void fly(){}
 }
-public class Penguin extends Bird {
+public class Penguin : Bird {
     // Penguin can not fly, 
     // So Penguin has not all property that are exist for a bird
     // extends Bird is invalid
@@ -424,8 +424,8 @@ public class Airplane : IVehicle
 // Client
 public class DriveCar
 {
-    private readonly ICar _car;
-    public DriveCar(ICar car)
+    private readonly Car _car;
+    public DriveCar(Car car)
     {
         _car = car;
     }
