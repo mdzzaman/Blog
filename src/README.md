@@ -1,2 +1,2 @@
 # Blog
-[Solid](SOLID/SOLID.md)
+[Solid](SOLID/README.md)
