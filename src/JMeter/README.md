@@ -14,4 +14,4 @@ The Apache JMeter™ application is open source software, a 100% pure Java appli
 
 ## Example
 ### Hello World
-<video src='Asset/HelloWorld.mp4' width=580 />
+<video src='https://github.com/mdzzaman/Blog/raw/jmeter/src/JMeter/Asset/HelloWorld.mp4' width=580 />
