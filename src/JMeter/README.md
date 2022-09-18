@@ -15,3 +15,26 @@ The Apache JMeter™ application is open source software, a 100% pure Java appli
 ## Example
 ### Hello World
 ![](Asset/HelloWorld.gif)
+
+https://www.youtube.com/watch?v=T-bTll7IRL0
+
+## Set User Defined Variables
+![](Asset/User_Defined_Variables.png)
+Use This variable by `${variable}` in other place, like **HTTP Header Manager**, **HTTP Cookie Manager** etc.
+
+## HTTP Header Manager
+![](Asset/http-header-manager.png)
+![](Asset/http-header-manager-2.png)
+
+## HTTP Cookie Manager
+![](Asset/http-cookie-manager.png)
+![](Asset/http-cookie-manager-2.png)
+### HTTP Cookie for all request and automatically set
+we can use it in thread level
+![](Asset/http-cookie-manager-3.png)
+![](Asset/http-cookie-manager-4.png)
+
+## JSON Extractor (Get access token)
+![](Asset/json-extractor.png)
+Then add **User Defined Variables**  *Token*
+![](Asset/json-extractor-2.png)
