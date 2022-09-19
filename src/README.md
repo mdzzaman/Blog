@@ -1,3 +1,3 @@
 # Blog
-[Solid](SOLID/README.md)
-[JMeter](JMeter/README.md)
+1. [Solid](SOLID/README.md)
+1. [JMeter](JMeter/README.md)
