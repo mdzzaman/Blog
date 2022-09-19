@@ -29,7 +29,7 @@ Use This variable by `${variable}` in other place, like **HTTP Header Manager**,
 ## HTTP Cookie Manager
 ![](Asset/http-cookie-manager.png)
 ![](Asset/http-cookie-manager-2.png)
-### HTTP Cookie for all request and automatically set
+### HTTP Cookie for all request and set automatically
 we can use it in thread level
 ![](Asset/http-cookie-manager-3.png)
 ![](Asset/http-cookie-manager-4.png)
@@ -38,3 +38,65 @@ we can use it in thread level
 ![](Asset/json-extractor.png)
 Then add **User Defined Variables**  *Token*
 ![](Asset/json-extractor-2.png)
+
+## JSR223 PostProcessor (**!Important**)
+- It will run after all redirect done
+
+## Assertions
+|TYPE | USAGE|
+|-----|------|
+|Response Assertion |	Apply a string pattern to verify against the server response|
+|Duration Assertion |	Check the response was received within a given elapsed time|
+|Size Assertion |	Check the size of the server response contains the wanted number of bytes|
+|XML Assertion |	Check the response is a valid XML document|
+|Beanshell Assertion |	Execute your own logic using Beanshell scripting|
+|MD5Hex Assertion |	Allows to check the MD5 hash of the response data (great for static files)|
+|HTML Assertion |	Check html response syntax using JTidy|
+|XPath Assertion |	Tests if a document is well-formed, with possible DTD validation, or putting the document through JTidy and testing with XPath |
+|XML Shema Assertion |	Validate an XML response against an XML schema|
+|JSR223 Assertion |	Run your own code logic using a JSR223 Script|
+|Compare Assertion |	Compares results between themselves|
+|SMIME Assertion |	Evaluate the sample results from the Mail Reader Sampler|
+|JSON Assertion |	Execute JsonPath expressions and validate Json documents|
+
+## Assertions Performance
+|ASSERTION |	CPU/MEMORY USAGE |	NOTES|
+|----------|---------------------|-------|
+|Response Assertion |	Moderate |	Regular Expressions|
+|Duration Assertion |	Low |	|
+|Size Assertion |	Low |	|
+|XML Assertion |	High |	Builds XML DOM Documents|
+|Beanshell Assertion |	Variable |	Depends on the script logic|
+|MD5Hex Assertion |	Low |	|
+|HTML Assertion |	High |	Parses the HTML Response|
+|XPath Assertion |	High |	Builds XML DOM Documents|
+|XML Schema | Assertion |	High	Builds XML DOM Documents|
+|JSR223 Assertion |	Variable |	Depends on the script logic|
+|Compare Assertion |	High |	Parses responses and compares them|
+|SMIME Assertion |	Moderate |	|
+|Json Assertion |	High |	Parses the Json document|
+
+
+## Data Extract
+### BeanShell Preprocessor
+![](Asset/BeanShell-Preprocessor.png)
+### CSS Selector Extractor
+![](Asset/CSS-Selector-Extractor.png)
+- Select data from html by css selector
+- Set Attribute for get value
+- Set data in variable for future use
+
+- Crete Multiple Selector for multiple value
+
+### BeanShell PostProcessor
+- Get value from User Defined Variables
+![](Asset/BeanShell-PostProcessor.png)
+
+### Response Assertion
+![](Asset/ResponseAssertion.png)
+
+### Thread Group
+![](Asset/ThreadGroup.png)
+
+
+[r1](https://octoperf.com/blog/2018/04/19/jmeter-assertions/#supported-assertions)
