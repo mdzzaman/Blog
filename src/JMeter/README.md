@@ -30,7 +30,7 @@ Use This variable by `${variable}` in other place, like **HTTP Header Manager**,
 ![](Asset/http-cookie-manager.png)
 ![](Asset/http-cookie-manager-2.png)
 ### HTTP Cookie for all request and set automatically
-we can use it in thread level
+we can use it in thread level and update **apache-jmeter-5.5\bin\jmeter.properties** `CookieManager.save.cookies=true`
 ![](Asset/http-cookie-manager-3.png)
 ![](Asset/http-cookie-manager-4.png)
 
@@ -98,5 +98,30 @@ Then add **User Defined Variables**  *Token*
 ### Thread Group
 ![](Asset/ThreadGroup.png)
 
+### Overcoming HTTPS Socket Errors in JMeter
+1. Use latest version of JMeter
+    - It is highly recommended to use the most recent version, to leverage new improvements and components. Avoid using versions that are older than 3 versions before the last one.
+1. Enable DEBUG mode in JMeter
+    - Options -> Log Level -> DEBUG
+1. Set Connection timeout
+    - The default connection timeout in JMeter is 20 seconds out-of-the-box. To help diagnose and resolve socket connection issues, it is often helpful to increase this value. To do so, specify a higher connection timeout the HTTP Request object in your JMeter test plan. For example, set to 60000 (milliseconds) to increase the overall timeout to 60 seconds.
+
+    - Add a ‘HTTP Request Default’ configuration element from the ‘Configuration Elements’ option (i.e., Right-click test plan and add this ‘HTTP Request Default’).
+![](Asset/connection-timeout.jpg)
+![](Asset/connection-timeout-2.jpg)
+![](Asset/connection-timeout-3.png)
+1. Delay Thread Creation
+    - JMeter has an option to delay thread creation until the thread starts sampling (i.e., after any thread group delay and the ramp-up time for the thread itself). This allows for a very large total number of threads, provided that not too many are active concurrently.
+![](Asset/Delay Thread Creation.jpg)
+1. Disable Parallel Downloads
+![](Asset/disable-parallel-download.jpg)
+1. Enable HTTP Keep-Alive on web servers
+    - Keep-Alive is very important feature of HTTP protocol. It allows the client to make several HTTP requests over single TCP connection. This provides a great performance gain, since otherwise establishing many TCP connections will produce a lot of unnecessary networking overhead.
+
+## Clean data
+![](Asset/clean-data.png)
+
+## Off Execution
+![](Asset/off-execution.png)
 
 [r1](https://octoperf.com/blog/2018/04/19/jmeter-assertions/#supported-assertions)
