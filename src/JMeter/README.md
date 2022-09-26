@@ -94,6 +94,8 @@ Then add **User Defined Variables**  *Token*
 
 ### Response Assertion
 ![](Asset/ResponseAssertion.png)
+- Status Code Check
+![](Asset/Response-assertion.png)
 
 ### Thread Group
 ![](Asset/ThreadGroup.png)
